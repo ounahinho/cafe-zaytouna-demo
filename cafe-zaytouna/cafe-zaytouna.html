@@ -1,0 +1,259 @@
+<title>Café Zaytouna Agdal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: single column café page — hero with zellige band, menu grid, hours + location, sticky WhatsApp */
+:root{
+  --bg:#f7f8f4; --surface:#ffffff; --fg:#1b2a24; --muted:#5b6b63;
+  --green:#14533f; --green-ink:#0f3d2f; --saffron:#e3a21a; --clay:#b8542f;
+  --line:#dfe5df; --on-green:#f4f7f2;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1714; --surface:#16211c; --fg:#e8eee9; --muted:#9fb0a7;
+  --green:#2f8a6b; --green-ink:#123b2d; --saffron:#f0b53a; --clay:#e07a52;
+  --line:#26352e; --on-green:#f4f7f2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1714; --surface:#16211c; --fg:#e8eee9; --muted:#9fb0a7;
+  --green:#2f8a6b; --green-ink:#123b2d; --saffron:#f0b53a; --clay:#e07a52;
+  --line:#26352e; --on-green:#f4f7f2; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--saffron);outline-offset:3px;border-radius:6px}
+
+.demo{background:var(--saffron);color:#2a1d00;font-size:13px;font-weight:600;text-align:center;padding-block:6px}
+
+/* Header */
+header{background:var(--green-ink);color:var(--on-green)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:20px;text-decoration:none}
+.logo svg{flex:none}
+.nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-size:15px}
+.nav ul a{text-decoration:none;opacity:.85}
+.nav ul a:hover{opacity:1;text-decoration:underline}
+
+/* Hero */
+.hero{background:var(--green-ink);color:var(--on-green);padding-block:40px 56px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600;color:var(--saffron)}
+.hero h1{font-size:clamp(40px,7vw,72px);font-weight:800;margin-top:10px}
+.hero p.lead{font-size:18px;max-width:46ch;opacity:.9;margin:16px 0 0}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 14px;font-size:14px}
+.dot{width:9px;height:9px;border-radius:50%;background:#4ade80}
+.dot.closed{background:#f87171}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:12px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn-wa{background:var(--saffron);color:#2a1d00}
+.btn-ghost{background:transparent;color:var(--on-green);border:1.5px solid rgba(255,255,255,.45)}
+.btn:hover{filter:brightness(1.06)}
+
+/* zellige tile — the one bold element */
+.tile{aspect-ratio:1/1;max-width:100%;border-radius:24px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.tile canvas{width:100%;height:100%;display:block}
+.band{height:14px;background:repeating-linear-gradient(90deg,var(--saffron) 0 28px,var(--clay) 28px 56px,var(--green) 56px 84px)}
+
+section{padding-block:56px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.section-head h2{font-size:clamp(30px,4.5vw,44px);font-weight:700}
+.section-head p{color:var(--muted);margin:0;max-width:40ch}
+
+/* Menu */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tab{background:var(--surface);border:1px solid var(--line);color:var(--fg);padding:8px 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--body)}
+.tab[aria-selected="true"]{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.menu{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px 24px}
+.item{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding-block:16px;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0}
+.item h3{font-size:18px;font-weight:700}
+.item .ar{font-family:var(--body);font-weight:500;color:var(--muted);font-size:15px;margin-left:6px}
+.item p{grid-column:1/2;margin:0;color:var(--muted);font-size:14px}
+.price{font-family:var(--display);font-weight:700;font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--clay)}
+.price small{font-size:12px;font-weight:600;color:var(--muted)}
+
+/* Info */
+.info{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;min-width:0}
+.card h3{font-size:22px;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+td{padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+tr:last-child td{border-bottom:0}
+td:last-child{text-align:right;color:var(--muted)}
+tr.today td{font-weight:700;color:var(--green)}
+tr.today td:last-child{color:var(--green)}
+.addr{font-size:17px;margin:0 0 6px}
+.muted{color:var(--muted);font-size:14px;margin:0}
+.contact{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.num{font-family:var(--display);font-weight:700;font-size:20px;user-select:all}
+.copy{background:var(--bg);border:1px solid var(--line);color:var(--fg);padding:8px 14px;border-radius:10px;font-weight:600;cursor:pointer;font-family:var(--body);font-size:14px}
+.maplink{margin-top:16px;display:inline-flex}
+.btn-green{background:var(--green);color:var(--on-green)}
+
+footer{background:var(--green-ink);color:var(--on-green);padding-block:28px;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--saffron)}
+
+.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:20}
+
+@media (max-width:760px){
+  .hero-grid,.info{grid-template-columns:1fr}
+  .tile{max-width:260px}
+  .nav ul{gap:14px;font-size:14px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.tab{transition:filter .15s, background .15s}}
+</style>
+
+<div class="demo">Site de démonstration · Commerce fictif</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#accueil" aria-label="Café Zaytouna, accueil">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 2 L18.5 11.5 L28 15 L18.5 18.5 L15 28 L11.5 18.5 L2 15 L11.5 11.5 Z" fill="#e3a21a"/><circle cx="15" cy="15" r="3.4" fill="#0f3d2f"/></svg>
+      Café Zaytouna
+    </a>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#infos">Horaires</a></li>
+      <li><a href="#infos">Accès</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="hero" id="accueil">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Agdal · Rabat · depuis 2019</div>
+      <h1>Le café du quartier, du msemen au dernier nous-nous.</h1>
+      <p class="lead">Petit-déjeuner beldi, jus pressés et thé à la menthe servis en terrasse, à deux pas de l'avenue Fal Ould Oumeir.</p>
+      <div class="status" id="status"><span class="dot" id="dot"></span><span id="statusText">Ouvert aujourd'hui de 7h00 à 23h00</span></div>
+      <div class="ctas">
+        <a class="btn btn-wa" href="https://wa.me/212600000000" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1a14 14 0 0 1-6.3-5.6c-.5-.8-1-2.1-.6-3.3.3-.8.9-1.3 1.3-1.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c.2.4.8 1.4 1.7 2.2 1.1 1 2 1.3 2.4 1.4l.5-.6.5-.6c.2-.2.4-.2.6-.1l2 1c.3.1.5.2.5.4 0 .2 0 .9-.2 1.6Z"/></svg>
+          Réserver sur WhatsApp
+        </a>
+        <a class="btn btn-ghost" href="#menu">Voir le menu</a>
+      </div>
+    </div>
+    <div class="tile" aria-hidden="true"><canvas id="zellige" width="480" height="480"></canvas></div>
+  </div>
+</div>
+<div class="band" aria-hidden="true"></div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Notre menu</h2>
+      <p>Prix en dirhams, service compris. Les plats sont préparés à la commande.</p>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="menu" id="menuList" role="tabpanel"></div>
+  </div>
+</section>
+
+<section id="infos" style="padding-top:0">
+  <div class="wrap info">
+    <div class="card">
+      <h3>Horaires</h3>
+      <table id="hours"></table>
+    </div>
+    <div class="card">
+      <h3>Nous trouver</h3>
+      <p class="addr">Avenue Fal Ould Oumeir, Agdal, Rabat</p>
+      <p class="muted">À 3 minutes à pied de la station de tram Agdal. Terrasse et salle climatisée, Wi-Fi gratuit.</p>
+      <a class="btn btn-green maplink" href="https://www.google.com/maps/search/?api=1&query=Avenue+Fal+Ould+Oumeir+Agdal+Rabat" target="_blank" rel="noopener">Ouvrir l'itinéraire</a>
+      <div class="contact">
+        <div>
+          <div class="muted">Téléphone / WhatsApp</div>
+          <div class="num" id="phone">06 00 00 00 00</div>
+        </div>
+        <button class="copy" id="copyBtn" type="button">Copier</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Café Zaytouna · Agdal, Rabat</span>
+    <span>Site réalisé par Simo · Développeur web à Rabat</span>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/212600000000" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1a14 14 0 0 1-6.3-5.6c-.5-.8-1-2.1-.6-3.3.3-.8.9-1.3 1.3-1.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c.2.4.8 1.4 1.7 2.2 1.1 1 2 1.3 2.4 1.4l.5-.6.5-.6c.2-.2.4-.2.6-.1l2 1c.3.1.5.2.5.4 0 .2 0 .9-.2 1.6Z"/></svg>
+</a>
+
+<script>
+const MENU = {
+  "Petit-déjeuner": [
+    ["Petit-déjeuner beldi","فطور بلدي","Msemen, harcha, beurre, miel, amlou, olives, œuf, thé ou café",45],
+    ["Msemen nature ou farci","مسمن","Farci au khliî ou aux oignons +5 DH",10],
+    ["Harcha au miel","حرشة","Galette de semoule dorée, miel et beurre",8],
+    ["Baghrir (2 pièces)","بغرير","Crêpes mille trous, miel et beurre fondu",12],
+    ["Omelette berbère","","Tomate, oignon, cumin, servie avec pain maison",30]
+  ],
+  "Boissons chaudes": [
+    ["Café noir","قهوة كحلة","Espresso serré",12],
+    ["Nous-nous","نص نص","Moitié café, moitié lait, servi en verre",14],
+    ["Thé à la menthe (théière)","أتاي","Menthe fraîche, pour 2 personnes",20],
+    ["Lait chaud à l'orange amère","","Recette maison",15]
+  ],
+  "Jus & frais": [
+    ["Jus d'orange pressé","عصير البرتقال","Pressé à la commande",18],
+    ["Avocat-dattes-lait","","Le classique, onctueux",25],
+    ["Panaché","بناشي","Banane, pomme, orange, lait",22],
+    ["Eau minérale 50 cl","","",6]
+  ]
+};
+const tabs = document.getElementById('tabs'), list = document.getElementById('menuList');
+function show(cat){
+  [...tabs.children].forEach(b=>b.setAttribute('aria-selected', b.textContent===cat));
+  list.innerHTML = MENU[cat].map(([n,ar,d,p])=>`
+    <div class="item"><h3>${n}${ar?`<span class="ar" lang="ar">${ar}</span>`:''}</h3>
+    <div class="price">${p} <small>DH</small></div>${d?`<p>${d}</p>`:''}</div>`).join('');
+}
+Object.keys(MENU).forEach((c,i)=>{
+  const b=document.createElement('button'); b.className='tab'; b.type='button'; b.id='tab'+i;
+  b.setAttribute('role','tab'); b.textContent=c; b.onclick=()=>show(c); tabs.appendChild(b);
+});
+show(Object.keys(MENU)[0]);
+
+// Hours, with today highlighted (Morocco time)
+const HOURS=[["Lundi","7h00 – 23h00",7,23],["Mardi","7h00 – 23h00",7,23],["Mercredi","7h00 – 23h00",7,23],["Jeudi","7h00 – 23h00",7,23],["Vendredi","7h00 – 12h00 · 14h30 – 23h30",7,23.5],["Samedi","8h00 – 00h00",8,24],["Dimanche","8h00 – 00h00",8,24]];
+let now; try{ now=new Date(new Date().toLocaleString('en-US',{timeZone:'Africa/Casablanca'})); }catch(e){ now=new Date(); }
+const idx=(now.getDay()+6)%7, h=now.getHours()+now.getMinutes()/60;
+document.getElementById('hours').innerHTML=HOURS.map((r,i)=>`<tr class="${i===idx?'today':''}"><td>${r[0]}${i===idx?' · aujourd\'hui':''}</td><td>${r[1]}</td></tr>`).join('');
+const t=HOURS[idx], open=h>=t[2]&&h<t[3];
+document.getElementById('statusText').textContent=(open?'Ouvert maintenant':'Fermé pour le moment')+' · aujourd\'hui '+t[1];
+if(!open) document.getElementById('dot').classList.add('closed');
+
+// Copy phone
+document.getElementById('copyBtn').onclick=async e=>{
+  const n=document.getElementById('phone').textContent;
+  try{ await navigator.clipboard.writeText(n); e.target.textContent='Copié'; }
+  catch(err){ const r=document.createRange(); r.selectNodeContents(document.getElementById('phone')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); e.target.textContent='Sélectionné'; }
+  setTimeout(()=>e.target.textContent='Copier',1800);
+};
+
+// Zellige star pattern
+(function(){
+  const c=document.getElementById('zellige'), x=c.getContext('2d'), S=c.width, n=4, u=S/n;
+  const cols=['#14533f','#e3a21a','#b8542f','#f4f7f2','#0f3d2f'];
+  x.fillStyle='#f4f7f2'; x.fillRect(0,0,S,S);
+  function star(cx,cy,r,ri,pts,col,rot){x.beginPath();for(let i=0;i<pts*2;i++){const a=rot+i*Math.PI/pts, rr=i%2?ri:r;x.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);}x.closePath();x.fillStyle=col;x.fill();}
+  for(let i=0;i<=n;i++)for(let j=0;j<=n;j++){
+    const cx=i*u, cy=j*u;
+    star(cx,cy,u*.62,u*.42,8,'#0f3d2f',Math.PI/8);
+    star(cx,cy,u*.5,u*.33,8,(i+j)%2?'#e3a21a':'#b8542f',Math.PI/8);
+    star(cx,cy,u*.2,u*.12,8,'#f4f7f2',0);
+    star(cx+u/2,cy+u/2,u*.18,u*.1,4,'#14533f',Math.PI/4);
+  }
+  x.strokeStyle='rgba(15,61,47,.35)'; x.lineWidth=2;
+  for(let k=0;k<=n;k++){x.beginPath();x.moveTo(k*u,0);x.lineTo(k*u,S);x.stroke();x.beginPath();x.moveTo(0,k*u);x.lineTo(S,k*u);x.stroke();}
+})();
+</script>
